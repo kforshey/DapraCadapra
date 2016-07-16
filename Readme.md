@@ -1,15 +1,15 @@
-Dapper - a simple object mapper for .Net
+DapraCadapra - a simple object mapper for .Net
 ========================================
 
 Release Notes
 -------------
 
-[link](http://stackexchange.github.io/dapper-dot-net/)
+[link](http://stackexchange.github.io/DapraCadapra-dot-net/)
 
 
 Features
 --------
-Dapper is a [NuGet library](https://www.nuget.org/packages/Dapper) that you can add in to your project that will extend your `IDbConnection` interface.
+DapraCadapra is a [NuGet library](https://www.nuget.org/packages/DapraCadapra) that you can add in to your project that will extend your `IDbConnection` interface.
 
 It provides 3 helpers:
 
@@ -111,7 +111,7 @@ This works for any parameter that implements IEnumerable<T> for some T.
 Performance
 -----------
 
-A key feature of Dapper is performance. The following metrics show how long it takes to execute 500 SELECT statements against a DB and map the data returned to objects.
+A key feature of DapraCadapra is performance. The following metrics show how long it takes to execute 500 SELECT statements against a DB and map the data returned to objects.
 
 The performance tests are broken in to 3 lists:
 
@@ -133,7 +133,7 @@ The performance tests are broken in to 3 lists:
 		<td rowspan="9"><a href="http://www.toptensoftware.com/blog/posts/94-PetaPoco-More-Speed">Can be faster</a></td>
 	</tr>
 	<tr>
-		<td>Dapper <code>ExecuteMapperQuery<Post></code></td>
+		<td>DapraCadapra <code>ExecuteMapperQuery<Post></code></td>
 		<td>49ms</td>
 	</tr>
 	<tr>
@@ -175,7 +175,7 @@ The performance tests are broken in to 3 lists:
 		<th>Remarks</th>
 	</tr>
 	<tr>
-		<td>Dapper <code>ExecuteMapperQuery</code> (dynamic)</td>
+		<td>DapraCadapra <code>ExecuteMapperQuery</code> (dynamic)</td>
 		<td>48ms</td>
 		<td rowspan="3">&nbsp;</td>
 	</tr>
@@ -225,7 +225,7 @@ The performance tests are broken in to 3 lists:
 	</tr>
 </table>
 
-Performance benchmarks are available [here](https://github.com/StackExchange/dapper-dot-net/blob/master/Dapper.Tests/PerformanceTests.cs).
+Performance benchmarks are available [here](https://github.com/StackExchange/DapraCadapra-dot-net/blob/master/DapraCadapra.Tests/PerformanceTests.cs).
 
 Feel free to submit patches that include other ORMs - when running benchmarks, be sure to compile in Release and not attach a debugger (ctrl F5).
 
@@ -242,7 +242,7 @@ new {A = 1, B = "b"} // A will be mapped to the param @A, B to the param @B
 
 List Support
 ------------
-Dapper allow you to pass in IEnumerable<int> and will automatically parameterize your query.
+DapraCadapra allow you to pass in IEnumerable<int> and will automatically parameterize your query.
 
 For example:
 
@@ -258,13 +258,13 @@ select * from (select 1 as Id union all select 2 union all select 3) as X where 
 
 Buffered vs Unbuffered readers
 ---------------------
-Dapper's default behavior is to execute your sql and buffer the entire reader on return. This is ideal in most cases as it minimizes shared locks in the db and cuts down on db network time.
+DapraCadapra's default behavior is to execute your sql and buffer the entire reader on return. This is ideal in most cases as it minimizes shared locks in the db and cuts down on db network time.
 
 However when executing huge queries you may need to minimize memory footprint and only load objects as needed. To do so pass, buffered: false into the Query method.
 
 Multi Mapping
 ---------------------
-Dapper allows you to map a single row to multiple objects. This is a key feature if you want to avoid extraneous querying and eager load associations.
+DapraCadapra allows you to map a single row to multiple objects. This is a key feature if you want to avoid extraneous querying and eager load associations.
 
 Example:
 
@@ -283,11 +283,11 @@ post.Owner.Name.IsEqualTo("Sam");
 post.Owner.Id.IsEqualTo(99);
 ```
 
-**important note** Dapper assumes your Id columns are named "Id" or "id", if your primary key is different or you would like to split the wide row at point other than "Id", use the optional 'splitOn' parameter.
+**important note** DapraCadapra assumes your Id columns are named "Id" or "id", if your primary key is different or you would like to split the wide row at point other than "Id", use the optional 'splitOn' parameter.
 
 Multiple Results
 ---------------------
-Dapper allows you to process multiple result grids in a single query.
+DapraCadapra allows you to process multiple result grids in a single query.
 
 Example:
 
@@ -309,7 +309,7 @@ using (var multi = connection.QueryMultiple(sql, new {id=selectedId}))
 
 Stored Procedures
 ---------------------
-Dapper fully supports stored procs:
+DapraCadapra fully supports stored procs:
 
 ```csharp
 var user = cnn.Query<User>("spGetUser", new {Id = 1}, 
@@ -332,7 +332,7 @@ int c = p.Get<int>("@c");
 
 Ansi Strings and varchar
 ---------------------
-Dapper supports varchar params, if you are executing a where clause on a varchar column using a param be sure to pass it in this way:
+DapraCadapra supports varchar params, if you are executing a where clause on a varchar column using a param be sure to pass it in this way:
 
 ```csharp
 Query<Thing>("select * from Thing where Name = @Name", new {Name = new DbString { Value = "abcde", IsFixedLength = true, Length = 10, IsAnsi = true });
@@ -342,23 +342,23 @@ On SQL Server it is crucial to use the unicode when querying unicode and ansi wh
 
 Limitations and caveats
 ---------------------
-Dapper caches information about every query it runs, this allow it to materialize objects quickly and process parameters quickly. The current implementation caches this information in a ConcurrentDictionary object. The objects it stores are never flushed. If you are generating SQL strings on the fly without using parameters it is possible you will hit memory issues. We may convert the dictionaries to an LRU Cache.
+DapraCadapra caches information about every query it runs, this allow it to materialize objects quickly and process parameters quickly. The current implementation caches this information in a ConcurrentDictionary object. The objects it stores are never flushed. If you are generating SQL strings on the fly without using parameters it is possible you will hit memory issues. We may convert the dictionaries to an LRU Cache.
 
-Dapper's simplicity means that many feature that ORMs ship with are stripped out, there is no identity map, there are no helpers for update / select and so on.
+DapraCadapra's simplicity means that many feature that ORMs ship with are stripped out, there is no identity map, there are no helpers for update / select and so on.
 
-Dapper does not manage your connection's lifecycle, it assumes the connection it gets is open AND has no existing datareaders enumerating (unless MARS is enabled)
+DapraCadapra does not manage your connection's lifecycle, it assumes the connection it gets is open AND has no existing datareaders enumerating (unless MARS is enabled)
 
-Will Dapper work with my DB provider?
+Will DapraCadapra work with my DB provider?
 ---------------------
-Dapper has no DB specific implementation details, it works across all .NET ADO providers including [SQLite](http://www.sqlite.org/), SQL CE, Firebird, Oracle, MySQL, PostgreSQL and SQL Server.
+DapraCadapra has no DB specific implementation details, it works across all .NET ADO providers including [SQLite](http://www.sqlite.org/), SQL CE, Firebird, Oracle, MySQL, PostgreSQL and SQL Server.
 
 Do you have a comprehensive list of examples?
 ---------------------
-Dapper has a comprehensive test suite in the [test project](https://github.com/StackExchange/dapper-dot-net/blob/master/Dapper.Tests/Tests.cs)
+DapraCadapra has a comprehensive test suite in the [test project](https://github.com/StackExchange/DapraCadapra-dot-net/blob/master/DapraCadapra.Tests/Tests.cs)
 
 Who is using this?
 ---------------------
-Dapper is in production use at:
+DapraCadapra is in production use at:
 
 [Stack Overflow](http://stackoverflow.com/), [helpdesk](https://www.jitbit.com/web-helpdesk/)
 
