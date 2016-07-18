@@ -7,7 +7,13 @@ Update -- takes parameters of table name, column name, value, and a where calaus
 	-- Following stanard Dapper usage, your models shoudl have names matching tables and properties matching columns, so this method could be called like:
 	db.update(object.GetType().GetName().ToString(), object.GetProperty("property").GetName().ToString, "value", "field = x");
 ExecuteMany -- Works exactly like the Execute method in Dapper, except that it takes a list of strings (where each string is a sql query) and will execute them all on one trip to the database.
-Insert -- Documentation coming soon.
+Insert -- Pass this method the name of the table you want to insert into, and a dictionary containing the names of the fields and the values for those fields.
+
+
+Installation
+--------------------------------------------
+Compile the project and then simply add the dapracadapra.dll file corresponding to your .net version that your project is using as a reference in your project.
+Note:  This should also compile fine in Mono, but it has not been tested.
 
 Release Notes
 -------------
