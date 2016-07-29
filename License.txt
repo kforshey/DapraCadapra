@@ -1,1 +1,10 @@
 http://www.apache.org/licenses/LICENSE-2.0
+
+DapraCadapra is licensed under the Apache licnse, but I sldo require that you add the following line to any file that eferences the DapraCadapra.dll file.
+/**************************************
+ * DapraCadapra is open source software
+ * and source code is available on Github:
+ * https://github.com/kforshey/DapraCadapra.git
+ * DapraCadapra is licensed under the 
+ * Apache license from Kevin Forshey
+ * ************************************/
