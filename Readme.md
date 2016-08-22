@@ -3,11 +3,11 @@ DapraCadapra - a simple object mapper for .Net
 
 Additions to Dapper Dot Net:
 In the core SqlMapper object, I've added 3 methods so far.
-Update -- takes parameters of table name, column name, value, and a where calause.
-	-- Following stanard Dapper usage, your models shoudl have names matching tables and properties matching columns, so this method could be called like:
+Update -- takes parameters of table name, column name, value, and a where clause.
+	-- Following standard Dapper usage, your models shoudl have names matching tables and properties matching columns, so this method could be called like:
 	db.update(object.GetType().GetName().ToString(), object.GetProperty("property").GetName().ToString, "value", "field = x");
 ExecuteMany -- Works exactly like the Execute method in Dapper, except that it takes a list of strings (where each string is a sql query) and will execute them all on one trip to the database.
-Insert -- Pass this method the name of the table you want to insert into, and a dictionary containing the names of the fields and the values for those fields.
+Insert -- Pass this method the name of the table you want to insert into, and a dictionary containing the names of the fields and the values for those fields, this is experimental.
 
 
 Installation
@@ -24,7 +24,7 @@ This project is forked from Dapper Dot Net available at:
 
 Features
 --------
-A fork of Daooer Dot Net including evrything in Dapper plus the following.
+A fork of Dapper Dot Net including evrything in Dapper plus the following.
 
 It provides 3 helpers:
 
