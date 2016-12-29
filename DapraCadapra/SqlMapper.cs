@@ -742,7 +742,7 @@ namespace DapraCadapra
        /// <param name="col"></param>
        /// <param name="val"></param>
        /// <param name="clause"></param>
-        public static void Update(this IDbConnection cnn, string table, string col, string val, string clause = null)
+        public static void Update(this IDbConnection cnn, string table, string col, string val, string clause)
         {
             string sql = @"Update " + table + @" set " + col + @" = @value" + @" " + clause ;
             cnn.Execute(sql, new { value = val });
